@@ -1,7 +1,16 @@
 #Sluggish Octopus O(n^2)
 def sluggish_octopus(fish)
+    fish.each_with_index do |fish1, idx1|
+        biggest_fish = true
 
+        fish.each_with_index do |fish2, idx2|
+            next if idx1 == idx2
 
+            biggest_fish = false if fish1.length < fish2.length
+        end
+
+        return fish1 if biggest_fish
+    end
 end
 
 # Dominant Octopus O(n log n) (merge_sort)
@@ -27,7 +36,7 @@ end
 # => "fiiiissshhhhhh"
 fish = ['fish', 'fiiish', 'fiiiiish', 'fiiiish', 'fffish', 'ffiiiiisshh', 'fsh', 'fiiiissshhhhhh']
 
-# puts sluggish_octopus(fish)
+puts sluggish_octopus(fish)
 
 # puts clever_octopus(fish)
 
