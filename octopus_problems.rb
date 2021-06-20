@@ -14,6 +14,46 @@ def sluggish_octopus(fish)
 end
 
 # Dominant Octopus O(n log n) (merge_sort)
+def dominant_octopus(fish)
+    prc = Proc.new { |x, y| x.length <=> y.length }
+    fish.mergesort(&prc).last
+end
+
+class Array
+    def mergesort(&prc)
+        prc ||= Proc.new { |x, y| x <=> y }
+
+        return self if count <= 1
+
+        mid_point = count / 2
+
+        sorted_right = self[0...mid_point].mergesort(&prc)
+        sorted_left = self[mid_point..-1].mergesort(&prc)
+
+        Array.merge(sorted_left, sorted_right, &prc)
+    end
+
+    def self.merge(left, right, &prc)
+        merged = []
+
+        until left.empty? || right.empty?
+            case prc.call(left.first, right.first)
+            when -1
+                merged << left.shift
+            when 0
+                merged << left.shift
+            when 1
+                merged << right.shift
+            end
+        end
+
+        merged.concat(left)
+        merged.concat(right)
+    
+        merged
+    end
+end
+
 
 
 
@@ -36,11 +76,11 @@ end
 # => "fiiiissshhhhhh"
 fish = ['fish', 'fiiish', 'fiiiiish', 'fiiiish', 'fffish', 'ffiiiiisshh', 'fsh', 'fiiiissshhhhhh']
 
-puts sluggish_octopus(fish)
+# puts sluggish_octopus(fish)
 
 # puts clever_octopus(fish)
 
-# puts dominant_octopus(fish)
+puts dominant_octopus(fish)
 
 
 
