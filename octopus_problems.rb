@@ -1,22 +1,22 @@
 #Sluggish Octopus O(n^2)
 def sluggish_octopus(fish)
     fish.each_with_index do |fish1, idx1|
-        biggest_fish = true
+        biggestfish = true
 
         fish.each_with_index do |fish2, idx2|
             next if idx1 == idx2
 
-            biggest_fish = false if fish1.length < fish2.length
+            biggestfish = false if fish1.length < fish2.length
         end
 
-        return fish1 if biggest_fish
+        return fish1 if biggestfish
     end
 end
 
 # Dominant Octopus O(n log n) (merge_sort)
 def dominant_octopus(fish)
-    prc = Proc.new { |x, y| x.length <=> y.length }
-    fish.mergesort(&prc).last
+    prc = Proc.new { |x, y| y.length <=> x.length }
+    fish.mergesort(&prc)[0]
 end
 
 class Array
@@ -25,10 +25,11 @@ class Array
 
         return self if count <= 1
 
-        mid_point = count / 2
+        mid = count / 2
 
-        sorted_right = self[0...mid_point].mergesort(&prc)
-        sorted_left = self[mid_point..-1].mergesort(&prc)
+        sorted_left = self[0...mid].mergesort(&prc)
+        sorted_right = self[mid..-1].mergesort(&prc)
+
 
         Array.merge(sorted_left, sorted_right, &prc)
     end
@@ -49,7 +50,7 @@ class Array
 
         merged.concat(left)
         merged.concat(right)
-    
+
         merged
     end
 end
@@ -80,7 +81,7 @@ fish = ['fish', 'fiiish', 'fiiiiish', 'fiiiish', 'fffish', 'ffiiiiisshh', 'fsh',
 
 # puts clever_octopus(fish)
 
-puts dominant_octopus(fish)
+# puts dominant_octopus(fish)
 
 
 
