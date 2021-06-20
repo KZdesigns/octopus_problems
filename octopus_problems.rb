@@ -86,3 +86,37 @@ fish = ['fish', 'fiiish', 'fiiiiish', 'fiiiish', 'fffish', 'ffiiiiisshh', 'fsh',
 
 
 
+# Slow Dance O(n)
+def slow_dance(direction, tiles_array)
+
+    tiles_array.each_with_index do |tile, idx|
+        return idx if tile == direction
+    end 
+
+    nil
+end
+
+def fast_dance(direction, tile_data_structure)
+    tile_data_structure.key(direction)
+end
+
+
+
+tiles_array = ["up", "right-up", "right", "right-down", "down", "left-down", "left",  "left-up" ]
+new_tiles_data_structure = {0 => "up",1 => "right-up",2 => "right",3 => "right-down",4 => "down",5 => "left-down",6 => "left",  7 => "left-up"}
+
+# p slow_dance("up", tiles_array)
+# > 0
+
+# p slow_dance("right-down", tiles_array)
+# > 3
+
+# p fast_dance("up", new_tiles_data_structure)
+# > 0
+
+# p fast_dance("right-down", new_tiles_data_structure)
+# > 3
+
+
+
+
